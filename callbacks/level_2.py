@@ -7,7 +7,10 @@ import json
 def level_2(main_screen):
     clock = pygame.time.Clock()
     screen_width, screen_height = 1300, 600
+
+    main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
+
     pygame.display.set_caption("Level 2 - Chemiezimmer")
 
     font_path = "assets/font.ttf"
@@ -42,7 +45,7 @@ def level_2(main_screen):
         else:
             pygame.draw.rect(screen_surface, BUTTON_COLOR, ok_button)
 
-        overlay_image = Image("assets/overlay_level_2.png", (1300, 600)).image
+        overlay_image = Image("assets/overlay_level_2.png", (screen_width, screen_height)).image
         screen_surface.blit(overlay_image, (0, 0))
 
         ok_text = font.render("X", True, TEXT_COLOR)

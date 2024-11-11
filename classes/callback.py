@@ -3,6 +3,8 @@ from callbacks.level_1 import level_1
 from callbacks.level_2 import level_2
 from callbacks.level_3 import level_3
 from callbacks.level_4 import level_4
+from callbacks.level_5 import level_5
+
 
 
 class Callback:
@@ -21,6 +23,9 @@ class Callback:
 
         elif button_label == "Level 4":
             level_4(main_screen)
+
+        elif button_label == "Level 5":
+            level_5(main_screen)
 
         else:
             print(f"Button {button_label} was clicked.")

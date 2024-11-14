@@ -8,7 +8,7 @@ import random
 def level_3(main_screen):
     clock = pygame.time.Clock()
     screen_width, screen_height = 1300, 873
-    main_screen = pygame.display.set_mode((screen_width, screen_height))  # Update window size
+    main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
     pygame.display.set_caption("Level 3 - Geographie")
 
@@ -144,6 +144,6 @@ def level_3(main_screen):
 
 if __name__ == "__main__":
     pygame.init()
-    main_screen = pygame.display.set_mode((1300, 873))  # Set initial window size
+    main_screen = pygame.display.set_mode((1300, 873))
     level_3(main_screen)
     pygame.quit()

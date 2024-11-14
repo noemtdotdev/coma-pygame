@@ -66,7 +66,6 @@ clock = pygame.time.Clock()
 while running:
     pygame.display.set_caption("Levelauswahl")
 
-    # Check if the screen size needs to be updated
     if screen.get_width() != WIDTH or screen.get_height() != HEIGHT:
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
 

@@ -80,23 +80,11 @@ def level_4(main_screen):
 
         elapsed_time = time.time() - start_time
         remaining_time = max(0, time_limit - elapsed_time)
-        timer_text = font.render(f"Time: {int(remaining_time)}", True, TEXT_COLOR)
+        timer_text = font.render(f"Zeit: {int(remaining_time)}", True, TEXT_COLOR)
         timer_rect = timer_text.get_rect(center=(screen_width // 2, screen_height // 4))
         screen_surface.blit(timer_text, timer_rect)
 
         if remaining_time <= 0:
-            running = False
-
-        if index >= 20:
-            with open("levels.json", "r") as file:
-                levels_data = json.load(file)["levels"]
-
-            levels_data[4]["unlocked"] = True
-            levels_data[3]["completed"] = True
-
-            with open("levels.json", "w") as file:
-                json.dump({"levels": levels_data}, file)
-
             running = False
 
         for event in pygame.event.get():
@@ -130,8 +118,20 @@ def level_4(main_screen):
         pygame.display.flip()
         clock.tick(60)
 
+    if index >= 20:
+        with open("levels.json", "r") as file:
+            levels_data = json.load(file)["levels"]
+
+        levels_data[4]["unlocked"] = True
+        levels_data[3]["completed"] = True
+
+        with open("levels.json", "w") as file:
+            json.dump({"levels": levels_data}, file)
+
+        running = False
+
 if __name__ == "__main__":
     pygame.init()
-    main_screen = pygame.display.set_mode((1300, 873))  # Set initial window size
+    main_screen = pygame.display.set_mode((1300, 873))
     level_4(main_screen)
     pygame.quit()

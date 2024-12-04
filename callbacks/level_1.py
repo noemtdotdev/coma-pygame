@@ -1,18 +1,16 @@
 import pygame
-from classes.player import Player
-from classes.portal import Portal
 from classes.image import Image
 from classes.cursor import Cursor
 import json
 
 def level_1(main_screen):
     clock = pygame.time.Clock()
-    screen_width, screen_height = 1300, 600
+    screen_width, screen_height = 1300, 600  # Keep 13:6 ratio
     
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
     
-    pygame.display.set_caption("Level 1 - Tutorial")
+    pygame.display.set_caption("Level 1 - Labyrinth")
 
     font_path = "assets/font.ttf"
     font_size = 20
@@ -21,26 +19,44 @@ def level_1(main_screen):
     BUTTON_COLOR = (100, 100, 250)
     BUTTON_HOVER_COLOR = (150, 150, 255)
     BACKGROUND_COLOR = (30, 30, 30)
-    TEXT_COLOR = (255, 255, 255)
-
-    player = Player(screen_width)
-    portal = Portal()
-    player_group = pygame.sprite.Group(player)
-    portal_group = pygame.sprite.Group(portal)
 
     cursor = Cursor()
+
+    player_size = 10
+    player_color = (255, 255, 255)
+    player_rect = pygame.Rect(1260, 560, player_size, player_size)
+    player_speed = 5
+
+    portal_size = 20
+    portal_color = (0, 255, 0)
+    portal_rect = pygame.Rect(350, screen_height // 2 - 30, portal_size, portal_size)
+
+
+    walls = [
+        pygame.Rect(10, 10, 1280, 10),
+        pygame.Rect(10, 580, 1280, 10),
+        pygame.Rect(10, 10, 10, 580),
+        pygame.Rect(1280, 10, 10, 580),
+
+        pygame.Rect(1200, 520, 10, 60),
+
+    ]
 
     running = True
     while running:
         screen_surface.fill(BACKGROUND_COLOR)
 
-        player_group.update()
-        portal_group.update()
-
-        player_group.draw(screen_surface)
-        portal_group.draw(screen_surface)
+        overlay_image = Image("assets/overlay_level_1.png", (screen_width, screen_height)).image
+        screen_surface.blit(overlay_image, (0, 0))
 
         mouse_pos = pygame.mouse.get_pos()
+
+        pygame.draw.rect(screen_surface, player_color, player_rect)
+        pygame.draw.rect(screen_surface, portal_color, portal_rect)
+        
+        for wall in walls:
+            pygame.draw.rect(screen_surface, (0, 0, 0), wall)
+
         ok_button = pygame.Rect(screen_width - 60, 20, 40, 40)
 
         if ok_button.collidepoint(mouse_pos):
@@ -49,11 +65,8 @@ def level_1(main_screen):
         else:
             pygame.draw.rect(screen_surface, BUTTON_COLOR, ok_button)
 
-        overlay_image = Image("assets/overlay_level_1.png", (screen_width, screen_height)).image
-        screen_surface.blit(overlay_image, (0, 0))
-
-        ok_text = font.render("X", True, TEXT_COLOR)
-        ok_text_rect = ok_text.get_rect(center=(ok_button.center[0], ok_button.center[1]-2))
+        ok_text = font.render("X", True, (255, 255, 255))
+        ok_text_rect = ok_text.get_rect(center=ok_button.center)
         screen_surface.blit(ok_text, ok_text_rect)
 
         for event in pygame.event.get():
@@ -61,7 +74,7 @@ def level_1(main_screen):
                 running = False
             
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if pygame.sprite.spritecollideany(player, portal_group):
+                if player_rect.colliderect(portal_rect):
                     with open("levels.json", "r") as file:
                         levels_data = json.load(file)["levels"]
 
@@ -76,7 +89,25 @@ def level_1(main_screen):
                 if ok_button.collidepoint(mouse_pos):
                     running = False
 
-        if pygame.sprite.spritecollideany(player, portal_group):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            player_rect.x -= player_speed
+            if any(player_rect.colliderect(wall) for wall in walls):
+                player_rect.x += player_speed
+        if keys[pygame.K_RIGHT]:
+            player_rect.x += player_speed
+            if any(player_rect.colliderect(wall) for wall in walls):
+                player_rect.x -= player_speed
+        if keys[pygame.K_UP]:
+            player_rect.y -= player_speed
+            if any(player_rect.colliderect(wall) for wall in walls):
+                player_rect.y += player_speed
+        if keys[pygame.K_DOWN]:
+            player_rect.y += player_speed
+            if any(player_rect.colliderect(wall) for wall in walls):
+                player_rect.y -= player_speed
+
+        if player_rect.colliderect(portal_rect) or not screen_surface.get_rect().contains(player_rect):
             cursor.set_hand_cursor()
         elif not ok_button.collidepoint(mouse_pos):
             cursor.default()

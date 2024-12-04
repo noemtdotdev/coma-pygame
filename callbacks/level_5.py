@@ -22,6 +22,8 @@ def level_5(main_screen):
     BUTTON_HOVER_COLOR = (150, 150, 255)
     FONT = pygame.font.Font("assets/font.ttf", 40)
 
+    x_font = pygame.font.Font("assets/font.ttf", 20)
+
     with open("./assets/words.json", "r") as file:
         words = json.load(file)["words"]
 
@@ -32,13 +34,13 @@ def level_5(main_screen):
     game_duration = 60
 
     word_sequence = [random.choice(words) for _ in range(300)]
+    word_sequence = [word.split(" ")[0] for word in word_sequence]
 
     running = True
     while running:
         main_screen.fill(BACKGROUND_COLOR)
         mouse_pos = pygame.mouse.get_pos()
         
-
         ok_button = pygame.Rect(screen_width - 60, 20, 40, 40)
 
         if ok_button.collidepoint(mouse_pos):
@@ -47,10 +49,9 @@ def level_5(main_screen):
         else:
             pygame.draw.rect(main_screen, BUTTON_COLOR, ok_button)
 
-        ok_text = FONT.render("X", True, TEXT_COLOR)
+        ok_text = x_font.render("X", True, TEXT_COLOR)
         ok_text_rect = ok_text.get_rect(center=ok_button.center)
         main_screen.blit(ok_text, ok_text_rect)
-
 
         elapsed_time = time.time() - start_time
         remaining_time = game_duration - int(elapsed_time)
@@ -98,15 +99,15 @@ def level_5(main_screen):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_BACKSPACE:
                     typed_text = typed_text[:-1]
-                elif event.unicode.isalpha() or event.unicode.isspace():
-                    typed_text += event.unicode
-
-                if typed_text.strip() == word_sequence[current_word_index]:
-                    score += 1
+                elif event.key == pygame.K_SPACE:
+                    if typed_text.strip() == word_sequence[current_word_index]:
+                        score += 1
                     current_word_index += 1
                     typed_text = ""
                     if current_word_index >= len(word_sequence):
                         running = False
+                elif event.unicode.isalpha() or event.unicode.isspace():
+                    typed_text += event.unicode
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if ok_button.collidepoint(mouse_pos):

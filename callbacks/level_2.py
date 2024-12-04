@@ -1,7 +1,6 @@
 import pygame
 from classes.image import Image
 from classes.cursor import Cursor
-from classes.flask import Flask
 import json
 
 def level_2(main_screen):
@@ -11,7 +10,7 @@ def level_2(main_screen):
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
 
-    pygame.display.set_caption("Level 2 - Chemiezimmer")
+    pygame.display.set_caption("Level 2 - Musik")
 
     font_path = "assets/font.ttf"
     font_size = 20
@@ -23,14 +22,6 @@ def level_2(main_screen):
     TEXT_COLOR = (255, 255, 255)
 
     cursor = Cursor()
-
-    red_flask = Flask("red", 300, 200)
-    blue_flask = Flask("blue", 400, 202)
-    green_flask = Flask("green", 500, 204)
-    empty_flask = Flask("clear", 900, 210)
-
-    flasks = [red_flask, blue_flask, green_flask, empty_flask]
-    selected_flask = None
 
     running = True
     while running:
@@ -59,40 +50,7 @@ def level_2(main_screen):
                 if ok_button.collidepoint(mouse_pos):
                     running = False
 
-                for flask in flasks:
-                    if flask.rect.collidepoint(mouse_pos):
-
-                        if flask != empty_flask and not selected_flask:
-                            flask.toggle_pause()
-                            
-                            if flask.selected:
-                                flask.select()
-                                selected_flask = flask
-
-                            else:
-                                flask.deselect()
-                                flask.rect.topleft = flask.original_pos
-                                selected_flask = None
-
-                            for other_flask in flasks:
-                                if other_flask != flask:
-                                    other_flask.selected = False
-                                    other_flask.deselect()
-
-                        elif selected_flask:
-
-                            selected_flask.turn_clear_if_poured(empty_flask)
-                            selected_flask = None
-
-
-        flask_hovered = False
-        for flask in flasks:
-            flask.update(mouse_pos)
-            screen_surface.blit(flask.image, flask.rect)
-            if flask.rect.collidepoint(mouse_pos):
-                flask_hovered = True
-
-        if flask_hovered or ok_button.collidepoint(mouse_pos):
+        if ok_button.collidepoint(mouse_pos):
             cursor.set_hand_cursor()
         else:
             cursor.default()

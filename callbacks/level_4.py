@@ -3,6 +3,7 @@ import random
 import time
 from classes.image import Image
 from classes.cursor import Cursor
+from classes.item import Item
 import json
 
 def generate_equation():

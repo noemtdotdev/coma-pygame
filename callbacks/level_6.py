@@ -3,6 +3,7 @@ import random
 import json
 
 from classes.cursor import Cursor
+from classes.lives import Lives
 
 def level_6(main_screen):
     clock = pygame.time.Clock()
@@ -11,7 +12,7 @@ def level_6(main_screen):
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
 
-    pygame.display.set_caption("Level 6 - Völkerball")
+    pygame.display.set_caption("Level 6 - Dodgeball")
 
     font_path = "assets/font.ttf"
     font_size = 20
@@ -32,6 +33,10 @@ def level_6(main_screen):
     dodgeball_size = 20
     dodgeball_color = (255, 0, 0)
     dodgeballs = []
+
+    health_bar = Lives(3, (screen_width - 17*12, screen_height - 16*4))
+    lives_sprites = pygame.sprite.Group()
+    lives_sprites.add(health_bar)
 
     def spawn_dodgeball():
         x = random.randint(0, screen_width - dodgeball_size)
@@ -57,21 +62,28 @@ def level_6(main_screen):
         ok_text_rect = ok_text.get_rect(center=(ok_button.center[0], ok_button.center[1]-2))
         screen_surface.blit(ok_text, ok_text_rect)
 
-        # Draw the player
         pygame.draw.rect(screen_surface, player_color, player_rect)
 
-        # Draw and update dodgeballs
         for dodgeball in dodgeballs:
             pygame.draw.rect(screen_surface, dodgeball_color, dodgeball)
             dodgeball.y += 5
+
             if dodgeball.colliderect(player_rect):
-                running = False  # End the game if the player is hit
+                dodgeballs.remove(dodgeball)
+                current_hp = lives_sprites.sprites()[0].lives
+                lives_sprites.sprites()[0].decrement_lives()
+
+                if current_hp <= 1:
+                    running = False
+                
             if dodgeball.y > screen_height:
                 dodgeballs.remove(dodgeball)
 
-        # Spawn new dodgeballs
         if random.randint(1, 20) == 1:
             spawn_dodgeball()
+
+        lives_sprites.update()
+        lives_sprites.draw(screen_surface)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

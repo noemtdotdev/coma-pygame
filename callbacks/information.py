@@ -49,11 +49,14 @@ def show_information(main_screen):
         info_surface.blit(text, text_rect)
 
         texts = [
-            "INSERT: GAME NAME",
+            "Goethe Gymnasium: Das Spiel (oder so)",
             "Entwickelt mit PyGame von Dennis.",
             "Konzepte wurden von Shani erstellt.",
             f"Das Projekt beinhaltet {files} Python-Dateien mit insgesamt __{lines}__ Zeilen Code.",
             "Mit der Programmierung am Projekt wurde am __04.11.2024__ begonnen.",
+            "",
+            "",
+            "com.noemt.dev | com.dennis.beer"
         ]
 
         y_offset = 100

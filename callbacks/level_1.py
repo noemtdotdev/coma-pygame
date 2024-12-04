@@ -37,7 +37,6 @@ def level_1(main_screen):
         pygame.Rect(10, 580, 1280, 10),
         pygame.Rect(10, 10, 10, 580),
         pygame.Rect(1280, 10, 10, 580),
-
         pygame.Rect(1200, 520, 10, 60),
 
     ]

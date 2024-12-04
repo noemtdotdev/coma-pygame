@@ -1,14 +1,19 @@
 import pygame
 import random
+import json
+
+from classes.cursor import Cursor
+from classes.item import Item
+from classes.lives import Lives
 
 def level_7(main_screen):
     clock = pygame.time.Clock()
-    screen_width, screen_height = 1300, 600
+    screen_width, screen_height = 600, 800
 
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
 
-    pygame.display.set_caption("Level 7 - Cafetaria")
+    pygame.display.set_caption("Level 7 - Cafeteria")
 
     font_path = "assets/font.ttf"
     font_size = 20
@@ -18,25 +23,33 @@ def level_7(main_screen):
     BUTTON_HOVER_COLOR = (150, 150, 255)
     BACKGROUND_COLOR = (30, 30, 30)
     TEXT_COLOR = (255, 255, 255)
-    FOOD_COLOR = (255, 0, 0)
+
+    success_count = 0
+
+    health_bar = Lives(3, (screen_width - 17*12, screen_height - 16*4))
+    lives_sprites = pygame.sprite.Group()
+    lives_sprites.add(health_bar)
+
+    last_hurt_counter = 0
+
+    cursor = Cursor()
 
     player_size = 20
     player_color = (255, 255, 255)
-    player_rect = pygame.Rect(screen_width // 2 - player_size // 2, screen_height // 2 - player_size // 2, player_size, player_size)
+    player_rect = pygame.Rect(screen_width // 2 - player_size // 2, screen_height - player_size - 10, player_size, player_size)
     player_speed = 5
 
-    food_size = 10
-    food_items = []
+    items = []
 
-    def spawn_food():
-        x = random.randint(0, screen_width - food_size)
-        y = random.randint(0, screen_height - food_size)
-        food_items.append(pygame.Rect(x, y, food_size, food_size))
+    def spawn_item():
+        x = random.randint(0, screen_width - 100)
+        item = Item(width=100)
+        item.rect.x = x
+        items.append(item)
 
-    for _ in range(10):
-        spawn_food()
+    spawn_item()
 
-    food_stack = []
+    ok_text = font.render("X", True, TEXT_COLOR)
 
     running = True
     while running:
@@ -45,53 +58,80 @@ def level_7(main_screen):
         mouse_pos = pygame.mouse.get_pos()
         ok_button = pygame.Rect(screen_width - 60, 20, 40, 40)
 
-        if ok_button.collidepoint(mouse_pos):
-            pygame.draw.rect(screen_surface, BUTTON_HOVER_COLOR, ok_button)
-        else:
-            pygame.draw.rect(screen_surface, BUTTON_COLOR, ok_button)
+        pygame.draw.rect(
+            screen_surface,
+            BUTTON_HOVER_COLOR if ok_button.collidepoint(mouse_pos) else BUTTON_COLOR,
+            ok_button
+        )
 
-        ok_text = font.render("X", True, TEXT_COLOR)
-        ok_text_rect = ok_text.get_rect(center=(ok_button.center[0], ok_button.center[1]-2))
+        ok_text_rect = ok_text.get_rect(center=(ok_button.center[0], ok_button.center[1] - 2))
         screen_surface.blit(ok_text, ok_text_rect)
 
-        # Draw the player
         pygame.draw.rect(screen_surface, player_color, player_rect)
 
-        # Draw the food items
-        for food in food_items:
-            pygame.draw.rect(screen_surface, FOOD_COLOR, food)
+        lives_sprites.update()
+        lives_sprites.draw(screen_surface)
 
-        # Draw the food stack
-        for i, food in enumerate(food_stack):
-            food_rect = pygame.Rect(player_rect.x, player_rect.y - (i + 1) * food_size, food_size, food_size)
-            pygame.draw.rect(screen_surface, FOOD_COLOR, food_rect)
+        items_to_remove = []
+        for item in items:
+            screen_surface.blit(item.image, item.rect)
+            item.rect.y += 5
+
+            if item.rect.colliderect(player_rect):
+                items_to_remove.append(item)
+
+                if not item.positive:
+                    current_hp = lives_sprites.sprites()[0].lives
+                    lives_sprites.sprites()[0].decrement_lives()
+
+                    last_hurt_counter = success_count
+
+                    if current_hp <= 1:
+                        running = False
+
+                else:
+                    success_count += 1
+                    if success_count - last_hurt_counter >= 10:
+                        lives_sprites.sprites()[0].increment_lives()
+                        last_hurt_counter -= 5
+
+            elif item.rect.y > screen_height:
+                items_to_remove.append(item)
+
+        for item in items_to_remove:
+            items.remove(item)
+
+        if random.randint(1, 40) == 1 and len(items) < 10:
+            spawn_item()
+
+        if success_count >= 50:
+            with open("levels.json", "r") as file:
+                levels_data = json.load(file)["levels"]
+
+            levels_data[7]["unlocked"] = True
+            levels_data[6]["completed"] = True
+
+            with open("levels.json", "w") as file:
+                json.dump({"levels": levels_data}, file)
+
+            running = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if ok_button.collidepoint(mouse_pos):
-                    running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and ok_button.collidepoint(mouse_pos):
+                running = False
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and player_rect.left > 0:
             player_rect.x -= player_speed
         if keys[pygame.K_RIGHT] and player_rect.right < screen_width:
             player_rect.x += player_speed
-        if keys[pygame.K_UP] and player_rect.top > 0:
-            player_rect.y -= player_speed
-        if keys[pygame.K_DOWN] and player_rect.bottom < screen_height:
-            player_rect.y += player_speed
 
-        # Check for collision with food items
-        for food in food_items[:]:
-            if player_rect.colliderect(food):
-                food_items.remove(food)
-                if len(food_stack) < 30:
-                    food_stack.append(food)
+        cursor.set_hand_cursor() if ok_button.collidepoint(mouse_pos) else cursor.default()
 
         main_screen.blit(screen_surface, (0, 0))
-        pygame.display.flip()
+        pygame.display.update()
         clock.tick(60)
 
 if __name__ == "__main__":

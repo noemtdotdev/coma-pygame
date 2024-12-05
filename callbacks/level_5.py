@@ -8,9 +8,9 @@ from classes.cursor import Cursor
 
 def level_5(main_screen):
     clock = pygame.time.Clock()
-    screen_width, screen_height = 1300, 600
+    screen_width, screen_height = 1792 // 1.5, 1121 // 1.5
     main_screen = pygame.display.set_mode((screen_width, screen_height))
-    pygame.display.set_caption("Level 5 - Deutsch")
+    pygame.display.set_caption("Level 5 - Schnelles Tippen")
 
     cursor = Cursor()
 
@@ -21,7 +21,6 @@ def level_5(main_screen):
     BUTTON_COLOR = (100, 100, 250)
     BUTTON_HOVER_COLOR = (150, 150, 255)
     FONT = pygame.font.Font("assets/font.ttf", 40)
-
     x_font = pygame.font.Font("assets/font.ttf", 20)
 
     with open("./assets/words.json", "r") as file:
@@ -36,11 +35,15 @@ def level_5(main_screen):
     word_sequence = [random.choice(words) for _ in range(300)]
     word_sequence = [word.split(" ")[0] for word in word_sequence]
 
+    overlay_image = Image("assets/overlay_level_5.png", (screen_width, screen_height)).image
+
     running = True
     while running:
         main_screen.fill(BACKGROUND_COLOR)
         mouse_pos = pygame.mouse.get_pos()
-        
+
+        main_screen.blit(overlay_image, (0, 0))
+
         ok_button = pygame.Rect(screen_width - 60, 20, 40, 40)
 
         if ok_button.collidepoint(mouse_pos):
@@ -59,12 +62,16 @@ def level_5(main_screen):
         if remaining_time <= 0:
             running = False
 
-        y_offset = 150
-        x_offset = 100
+        y_offset = screen_height // 1.39
+        x_offset = screen_width // 4.5
+        boundary_x = screen_width - screen_width // 5
+
         for i, word in enumerate(word_sequence[current_word_index:current_word_index + 10]):
             color = TEXT_COLOR
             if i == 0:
                 for j, char in enumerate(word):
+                    if x_offset >= boundary_x:
+                        break  # Stop rendering if boundary is reached
                     if j < len(typed_text):
                         char_color = CORRECT_COLOR if typed_text[j] == char else INCORRECT_COLOR
                     else:
@@ -75,17 +82,16 @@ def level_5(main_screen):
                 x_offset += 20
             else:
                 word_surface = FONT.render(word, True, color)
+                if x_offset + word_surface.get_width() >= boundary_x:
+                    break  # Stop rendering if boundary is reached
                 main_screen.blit(word_surface, (x_offset, y_offset))
                 x_offset += word_surface.get_width() + 20
 
-        timer_surface = FONT.render(f"Verbleibende Zeit: {remaining_time}", True, TEXT_COLOR)
-        main_screen.blit(timer_surface, (screen_width - 1000, 10))
+        timer_surface = FONT.render(f"Verbleibende Zeit: {remaining_time}s", True, TEXT_COLOR)
+        main_screen.blit(timer_surface, (screen_width - 900, screen_height // 2.55))
 
-        score_surface = FONT.render(f"Wörter: {score}", True, TEXT_COLOR)
-        main_screen.blit(score_surface, (10, 10))
-
-        overlay_image = Image("assets/overlay_level_5.png", (screen_width, screen_height)).image
-        main_screen.blit(overlay_image, (0, 0))
+        score_surface = x_font.render(f"{score}/50", True, TEXT_COLOR)
+        main_screen.blit(score_surface, (screen_width // 1.293, screen_height // 1.227))
 
         if ok_button.collidepoint(mouse_pos):
             cursor.set_hand_cursor()
@@ -118,7 +124,7 @@ def level_5(main_screen):
 
     main_screen.fill(BACKGROUND_COLOR)
 
-    if score > 50:
+    if score >= 30:
         with open("levels.json", "r") as file:
             levels_data = json.load(file)["levels"]
 

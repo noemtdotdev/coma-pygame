@@ -95,7 +95,7 @@ def level_3(main_screen):
 
         for polygons in polygons_to_draw:
             for polygon in polygons:
-                pygame.draw.polygon(screen_surface, (0, 255, 20), polygon, 1)
+                pygame.draw.polygon(screen_surface, (0, 255, 20), polygon, 3)
 
         for event in pygame.event.get():
 

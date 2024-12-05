@@ -28,7 +28,7 @@ def generate_equation():
 
 def level_4(main_screen):
     clock = pygame.time.Clock()
-    screen_width, screen_height = 1300, 600
+    screen_width, screen_height = 1121 // 1.121 // 2, 1792 // 1.121 // 2
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
     pygame.display.set_caption("Level 4 - Mathematik")
@@ -71,18 +71,18 @@ def level_4(main_screen):
         ok_text_rect = ok_text.get_rect(center=ok_button.center)
         screen_surface.blit(ok_text, ok_text_rect)
 
-        equation_text = font.render(equation, True, TEXT_COLOR)
-        equation_rect = equation_text.get_rect(center=(screen_width // 2, screen_height // 3))
+        equation_text = font.render(f'{equation} = ', True, TEXT_COLOR)
+        equation_rect = equation_text.get_rect(center=(screen_width // 2.5, screen_height // 3.6))
         screen_surface.blit(equation_text, equation_rect)
 
         input_text = font.render(user_input, True, TEXT_COLOR)
-        input_rect = input_text.get_rect(center=(screen_width // 2, screen_height // 2))
+        input_rect = input_text.get_rect(center=(screen_width // 1.5, screen_height // 3.6))
         screen_surface.blit(input_text, input_rect)
 
         elapsed_time = time.time() - start_time
         remaining_time = max(0, time_limit - elapsed_time)
-        timer_text = font.render(f"Zeit: {int(remaining_time)}", True, TEXT_COLOR)
-        timer_rect = timer_text.get_rect(center=(screen_width // 2, screen_height // 4))
+        timer_text = font.render(f"Verbleibende Zeit: {int(remaining_time)}s", True, TEXT_COLOR)
+        timer_rect = timer_text.get_rect(center=(screen_width // 2, screen_height // 11))
         screen_surface.blit(timer_text, timer_rect)
 
         if remaining_time <= 0:

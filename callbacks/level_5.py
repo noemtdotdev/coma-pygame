@@ -71,7 +71,7 @@ def level_5(main_screen):
             if i == 0:
                 for j, char in enumerate(word):
                     if x_offset >= boundary_x:
-                        break  # Stop rendering if boundary is reached
+                        break
                     if j < len(typed_text):
                         char_color = CORRECT_COLOR if typed_text[j] == char else INCORRECT_COLOR
                     else:
@@ -83,7 +83,7 @@ def level_5(main_screen):
             else:
                 word_surface = FONT.render(word, True, color)
                 if x_offset + word_surface.get_width() >= boundary_x:
-                    break  # Stop rendering if boundary is reached
+                    break
                 main_screen.blit(word_surface, (x_offset, y_offset))
                 x_offset += word_surface.get_width() + 20
 

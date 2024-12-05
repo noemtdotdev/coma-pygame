@@ -66,14 +66,11 @@ def level_8(main_screen):
         restart_text_rect = restart_text.get_rect(center=(restart_button.center[0], restart_button.center[1]-2))
         screen_surface.blit(restart_text, restart_text_rect)
 
-        # Draw the player
         pygame.draw.rect(screen_surface, player_color, player_rect)
 
-        # Draw the blocks
         for block in blocks:
             pygame.draw.rect(screen_surface, BLOCK_COLOR, block)
 
-        # Draw the goals
         for goal in goals:
             pygame.draw.rect(screen_surface, GOAL_COLOR, goal)
 
@@ -118,7 +115,6 @@ def level_8(main_screen):
                         block.y -= player_speed
                     player_rect.y -= player_speed
 
-        # Check if all blocks are in the correct positions
         if all(any(block.colliderect(goal) for goal in goals) for block in blocks):
             print("Puzzle Solved!")
             running = False

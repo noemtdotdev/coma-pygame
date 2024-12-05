@@ -9,7 +9,6 @@ def level_9(main_screen):
     screen_surface = pygame.Surface((screen_width, screen_height))
     pygame.display.set_caption("Level 9 - Memory")
 
-    # Fonts
     font_path = "assets/font.ttf"
     font_size = 20
     try:
@@ -17,7 +16,6 @@ def level_9(main_screen):
     except FileNotFoundError:
         font = pygame.font.SysFont(None, font_size)
 
-    # Colors
     BUTTON_COLOR = (100, 100, 250)
     BUTTON_HOVER_COLOR = (150, 150, 255)
     BACKGROUND_COLOR = (30, 30, 30)
@@ -25,7 +23,6 @@ def level_9(main_screen):
     CARD_BACK_COLOR = (200, 200, 200)
     CARD_FRONT_COLOR = (100, 100, 100)
 
-    # Cards
     card_size = 100
     card_margin = 10
     rows, cols = 4, 4
@@ -53,7 +50,6 @@ def level_9(main_screen):
         screen_surface.fill(BACKGROUND_COLOR)
         mouse_pos = pygame.mouse.get_pos()
 
-        # Exit button
         exit_button = pygame.Rect(screen_width - 60, 20, 40, 40)
         if exit_button.collidepoint(mouse_pos):
             pygame.draw.rect(screen_surface, BUTTON_HOVER_COLOR, exit_button)

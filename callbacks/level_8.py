@@ -1,9 +1,10 @@
 import pygame
 import random
+from classes.image import Image
 
 def level_8(main_screen):
     clock = pygame.time.Clock()
-    screen_width, screen_height = 1300, 600
+    screen_width, screen_height = 1792 // 1.5, 1121 // 1.5
 
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
@@ -50,9 +51,14 @@ def level_8(main_screen):
 
     reset_level()
 
+    overlay_image = Image("assets/overlay_level_8.png", (screen_width, screen_height)).image
+
+
     running = True
     while running:
         screen_surface.fill(BACKGROUND_COLOR)
+        screen_surface.blit(overlay_image, (0, 0))
+
 
         mouse_pos = pygame.mouse.get_pos()
         restart_button = pygame.Rect(screen_width - 160, 20, 140, 40)

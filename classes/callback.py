@@ -8,6 +8,7 @@ from callbacks.level_6 import level_6
 from callbacks.level_7 import level_7
 from callbacks.level_8 import level_8
 from callbacks.level_9 import level_9
+from callbacks.level_10 import level_10
 
 class Callback:
     def __init__(self, button_label, main_screen):

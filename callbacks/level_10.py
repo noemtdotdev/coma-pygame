@@ -3,14 +3,14 @@ from classes.image import Image
 from classes.cursor import Cursor
 import json
 
-def level_2(main_screen):
+def level_10(main_screen):
     clock = pygame.time.Clock()
     screen_width, screen_height = 1792 // 1.5, 1121 // 1.5
 
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
 
-    pygame.display.set_caption("Level 2 - Musik")
+    pygame.display.set_caption("Level 10 - Physik")
 
     font_path = "assets/font.ttf"
     font_size = 20
@@ -22,7 +22,7 @@ def level_2(main_screen):
     TEXT_COLOR = (255, 255, 255)
 
     cursor = Cursor()
-    overlay_image = Image("assets/overlay_level_2.png", (screen_width, screen_height)).image
+    overlay_image = Image("assets/overlay_level_10.png", (screen_width, screen_height)).image
 
     running = True
     while running:
@@ -62,5 +62,5 @@ def level_2(main_screen):
 if __name__ == "__main__":
     pygame.init()
     main_screen = pygame.display.set_mode((1300, 600))
-    level_2(main_screen)
+    level_10(main_screen)
     pygame.quit()

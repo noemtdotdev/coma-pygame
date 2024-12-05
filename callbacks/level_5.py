@@ -90,7 +90,7 @@ def level_5(main_screen):
         timer_surface = FONT.render(f"Verbleibende Zeit: {remaining_time}s", True, TEXT_COLOR)
         main_screen.blit(timer_surface, (screen_width - 900, screen_height // 2.55))
 
-        score_surface = x_font.render(f"{score}/50", True, TEXT_COLOR)
+        score_surface = x_font.render(f"{score}/30", True, TEXT_COLOR)
         main_screen.blit(score_surface, (screen_width // 1.293, screen_height // 1.227))
 
         if ok_button.collidepoint(mouse_pos):

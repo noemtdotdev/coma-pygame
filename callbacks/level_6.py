@@ -3,7 +3,6 @@ import random
 import json
 
 from classes.cursor import Cursor
-from classes.lives import Lives
 
 def level_6(main_screen):
     clock = pygame.time.Clock()
@@ -12,7 +11,7 @@ def level_6(main_screen):
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
 
-    pygame.display.set_caption("Level 6 - Dodgeball")
+    pygame.display.set_caption("Level 6 - Informatik")
 
     font_path = "assets/font.ttf"
     font_size = 20
@@ -24,26 +23,6 @@ def level_6(main_screen):
     TEXT_COLOR = (255, 255, 255)
 
     cursor = Cursor()
-
-    player_size = 20
-    player_color = (255, 255, 255)
-    player_rect = pygame.Rect(screen_width // 2 - player_size // 2, screen_height - player_size - 10, player_size, player_size)
-    player_speed = 5
-
-    dodgeball_size = 20
-    dodgeball_color = (255, 0, 0)
-    dodgeballs = []
-
-    health_bar = Lives(3, (screen_width - 17*12, screen_height - 16*4))
-    lives_sprites = pygame.sprite.Group()
-    lives_sprites.add(health_bar)
-
-    def spawn_dodgeball():
-        x = random.randint(0, screen_width - dodgeball_size)
-        y = -dodgeball_size
-        dodgeballs.append(pygame.Rect(x, y, dodgeball_size, dodgeball_size))
-
-    spawn_dodgeball()
 
     running = True
     while running:
@@ -62,45 +41,12 @@ def level_6(main_screen):
         ok_text_rect = ok_text.get_rect(center=(ok_button.center[0], ok_button.center[1]-2))
         screen_surface.blit(ok_text, ok_text_rect)
 
-        pygame.draw.rect(screen_surface, player_color, player_rect)
-
-        for dodgeball in dodgeballs:
-            pygame.draw.rect(screen_surface, dodgeball_color, dodgeball)
-            dodgeball.y += 5
-
-            if dodgeball.colliderect(player_rect):
-                dodgeballs.remove(dodgeball)
-                current_hp = lives_sprites.sprites()[0].lives
-                lives_sprites.sprites()[0].decrement_lives()
-
-                if current_hp <= 1:
-                    running = False
-                
-            if dodgeball.y > screen_height:
-                dodgeballs.remove(dodgeball)
-
-        if random.randint(1, 20) == 1:
-            spawn_dodgeball()
-
-        lives_sprites.update()
-        lives_sprites.draw(screen_surface)
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if ok_button.collidepoint(mouse_pos):
                     running = False
-
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and player_rect.left > 0:
-            player_rect.x -= player_speed
-        if keys[pygame.K_RIGHT] and player_rect.right < screen_width:
-            player_rect.x += player_speed
-        if keys[pygame.K_UP] and player_rect.top > 0:
-            player_rect.y -= player_speed
-        if keys[pygame.K_DOWN] and player_rect.bottom < screen_height:
-            player_rect.y += player_speed
 
         if ok_button.collidepoint(mouse_pos):
             cursor.set_hand_cursor()

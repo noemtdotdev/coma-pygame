@@ -4,7 +4,7 @@ import random
 def level_9(main_screen):
     pygame.init()
     clock = pygame.time.Clock()
-    screen_width, screen_height = 800, 600
+    screen_width, screen_height = 865, 800
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
     pygame.display.set_caption("Level 9 - Memory")
@@ -23,10 +23,29 @@ def level_9(main_screen):
     CARD_BACK_COLOR = (200, 200, 200)
     CARD_FRONT_COLOR = (100, 100, 100)
 
-    card_size = 100
+    card_size = 120
     card_margin = 10
-    rows, cols = 4, 4
-    words = ["apple", "banana", "cherry", "date", "fig", "grape", "kiwi", "lemon"]
+    rows, cols = 6, 6
+    words = [
+        "Zelle", 
+        "DNA", 
+        "Gen", 
+        "Klon", 
+        "Enzym", 
+        "RNA", 
+        "Virus", 
+        "Bakterium", 
+        "Chromosom", 
+        "Protein", 
+        "Krebs", 
+        "Säuger", 
+        "Blut", 
+        "Hormon", 
+        "Zucker", 
+        "Mutter", 
+        "Nerv", 
+        "Mark"
+    ]
     card_values = words * 2
     random.shuffle(card_values)
 

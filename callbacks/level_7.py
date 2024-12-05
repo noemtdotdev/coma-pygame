@@ -6,6 +6,8 @@ from classes.cursor import Cursor
 from classes.item import Item
 from classes.lives import Lives
 
+import os
+
 def level_7(main_screen):
     clock = pygame.time.Clock()
     screen_width, screen_height = 600, 800
@@ -40,13 +42,28 @@ def level_7(main_screen):
     player_speed = 5
 
     items = []
+    item_pool = []
+
+    def preload_items():
+        for path in os.listdir("assets/items"):
+            item = Item(path=path, width=100)
+            if item.image.get_height() > 100:
+                item.__init__(item.path, height=100)
+            item_pool.append(item)
 
     def spawn_item():
-        x = random.randint(0, screen_width - 100)
-        item = Item(width=100)
-        item.rect.x = x
-        items.append(item)
+        if item_pool:
+            item = random.choice(item_pool)
+            
+            new_item = Item(path=item.path, width=100)
+            if new_item.image.get_height() > 100:
+                new_item.__init__(new_item.path, height=100)
 
+            new_item.rect.x = random.randint(0, screen_width - 100)
+            new_item.rect.y = -new_item.rect.height
+            items.append(new_item)
+
+    preload_items()
     spawn_item()
 
     ok_text = font.render("X", True, TEXT_COLOR)

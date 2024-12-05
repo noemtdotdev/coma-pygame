@@ -9,7 +9,8 @@ class Item(pygame.sprite.Sprite):
         super().__init__()
         if path is None:
             path = self._choose_random_image(directory)
-
+        
+        self.path = path
 
         self.image = pygame.image.load(os.path.join(directory, path))
         image_height = self.image.get_height()

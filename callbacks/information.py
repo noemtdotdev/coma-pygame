@@ -54,7 +54,7 @@ def show_information(main_screen):
             "Konzepte wurden von Shani erstellt.",
             f"Das Projekt beinhaltet {files} Python-Dateien mit insgesamt __{lines}__ Zeilen Code.",
             "Mit der Programmierung am Projekt wurde am __04.11.2024__ begonnen.",
-            "",
+            "Beendet wurde das Spiel am __06.11.2024__.",
             "",
             "com.noemt.dev | com.dennis.beer"
         ]

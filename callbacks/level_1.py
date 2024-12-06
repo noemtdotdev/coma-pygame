@@ -418,7 +418,7 @@ def level_1(main_screen):
         pygame.draw.rect(screen_surface, portal_color, portal_rect)
         
         for _wall in walls:
-            pygame.draw.rect(screen_surface, (127, 0, 255), _wall)
+            pygame.draw.rect(screen_surface, (0, 0, 0), _wall)
 
         ok_button = pygame.Rect(screen_width - 60, 20, 40, 40)
 

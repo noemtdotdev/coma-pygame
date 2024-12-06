@@ -49,7 +49,6 @@ def show_information(main_screen):
         info_surface.blit(text, text_rect)
 
         texts = [
-            "Goethe Gymnasium: Das Spiel (oder so)",
             "Entwickelt mit PyGame von Dennis.",
             "Konzepte wurden von Shani erstellt.",
             f"Das Projekt beinhaltet {files} Python-Dateien mit insgesamt __{lines}__ Zeilen Code.",

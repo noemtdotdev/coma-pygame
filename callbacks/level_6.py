@@ -139,6 +139,7 @@ def level_6(main_screen):
                 json.dump({"levels": levels_data}, file)
 
             running = False
+            return
 
         task_text = font.render(tasks[task], True, TEXT_COLOR)
         task_text_rect = task_text.get_rect(center=(screen_width // 2, 20))

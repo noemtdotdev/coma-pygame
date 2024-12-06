@@ -1,6 +1,7 @@
 import pygame
 import random
 from classes.image import Image
+import json
 
 def level_9(main_screen):
     pygame.init()
@@ -97,6 +98,15 @@ def level_9(main_screen):
                 pygame.draw.rect(screen_surface, CARD_BACK_COLOR, card["rect"])
 
         if game_phase == "game_over":
+            with open("levels.json", "r") as file:
+                levels_data = json.load(file)["levels"]
+
+            levels_data[9]["unlocked"] = True
+            levels_data[8]["completed"] = True
+
+            with open("levels.json", "w") as file:
+                json.dump({"levels": levels_data}, file)
+
             running = False
 
         for event in pygame.event.get():

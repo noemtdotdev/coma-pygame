@@ -1,0 +1,100 @@
+{
+    "physik": {
+        "Was ist die Einheit der elektrischen Spannung?": {
+            "A": "Volt",
+            "B": "Ampere",
+            "C": "Ohm",
+            "correct": "A"
+        },
+        "Was ist die Einheit der elektrischen Stromstärke?": {
+            "A": "Volt",
+            "B": "Ampere",
+            "C": "Ohm",
+            "correct": "B"
+        },
+        "Was ist die Einheit des elektrischen Widerstands?": {
+            "A": "Volt",
+            "B": "Ampere",
+            "C": "Ohm",
+            "correct": "C"
+        },
+        "Was fand Albert Einstein heraus?": {
+            "A": "Die Relativitätstheorie",
+            "B": "Die Gravitation",
+            "C": "Die Quantenmechanik",
+            "correct": "A"
+        },
+        "Was ist die Einheit der Kraft?": {
+            "A": "Watt",
+            "B": "Joule",
+            "C": "Newton",
+            "correct": "C"
+        },
+        "Was ist die Einheit der Energie?": {
+            "A": "Watt",
+            "B": "Joule",
+            "C": "Newton",
+            "correct": "B"
+        },
+        "Was ist Alpha-Strahlung?": {
+            "A": "Heliumkerne",
+            "B": "Elektronen",
+            "C": "Lichtstrahlen",
+            "correct": "A"
+        },
+        "Was passiert bei einer Kernspaltung?": {
+            "A": "Ein Atomkern zerfällt in zwei leichtere Kerne",
+            "B": "Zwei Atomkerne verschmelzen",
+            "C": "Ein Atomkern löst sich in Elektronen auf",
+            "correct": "A"
+        },
+        "Was ist die Ursache für Magnetismus?": {
+            "A": "Bewegte Elektronen",
+            "B": "Stillstehende Protonen",
+            "C": "Schwingende Neutronen",
+            "correct": "A"
+        },
+        "Welches Teilchen trägt die negative Ladung?": {
+            "A": "Proton",
+            "B": "Neutron",
+            "C": "Elektron",
+            "correct": "C"
+        },
+        "Was versteht man unter Gravitation?": {
+            "A": "Die Anziehungskraft zwischen Massen",
+            "B": "Die Abstoßung zwischen Ladungen",
+            "C": "Die Drehbewegung eines Körpers",
+            "correct": "A"
+        },
+        "Was ist Licht?": {
+            "A": "Eine Welle",
+            "B": "Ein Teilchen",
+            "C": "Beides, je nach Experiment",
+            "correct": "C"
+        },
+        "Welche Kraft hält die Planeten auf ihren Bahnen?": {
+            "A": "Elektromagnetische Kraft",
+            "B": "Gravitationskraft",
+            "C": "Zentrifugalkraft",
+            "correct": "B"
+        },
+        "Was ist ein schwarzes Loch?": {
+            "A": "Ein Objekt mit unendlicher Masse",
+            "B": "Ein Bereich, aus dem nichts entkommen kann",
+            "C": "Ein Riss im Raum",
+            "correct": "B"
+        },
+        "Was beschreibt der Doppler-Effekt?": {
+            "A": "Die Änderung der Frequenz durch Bewegung",
+            "B": "Die Ablenkung von Licht durch ein Prisma",
+            "C": "Die Erzeugung von Schallwellen",
+            "correct": "A"
+        },
+        "Was ist der Unterschied zwischen Wechselstrom und Gleichstrom?": {
+            "A": "Wechselstrom ändert die Richtung, Gleichstrom bleibt konstant",
+            "B": "Gleichstrom hat höhere Spannung",
+            "C": "Wechselstrom kann nicht durch Kabel transportiert werden",
+            "correct": "A"
+        }
+    }
+}

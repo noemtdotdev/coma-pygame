@@ -50,10 +50,13 @@ def level_4(main_screen):
     time_limit = 5
 
     index = 0
+    overlay_image = Image("assets/overlay_level_4.png", (screen_width, screen_height)).image
+
 
     running = True
     while running:
         screen_surface.fill(BACKGROUND_COLOR)
+        screen_surface.blit(overlay_image, (0, 0))
 
         mouse_pos = pygame.mouse.get_pos()
         ok_button = pygame.Rect(screen_width - 60, 20, 40, 40)
@@ -64,18 +67,16 @@ def level_4(main_screen):
         else:
             pygame.draw.rect(screen_surface, BUTTON_COLOR, ok_button)
 
-        overlay_image = Image("assets/overlay_level_4.png", (screen_width, screen_height)).image
-        screen_surface.blit(overlay_image, (0, 0))
 
         ok_text = font.render("X", True, TEXT_COLOR)
         ok_text_rect = ok_text.get_rect(center=ok_button.center)
         screen_surface.blit(ok_text, ok_text_rect)
 
-        equation_text = font.render(f'{equation} = ', True, TEXT_COLOR)
+        equation_text = font.render(f'{equation} = ', True, (0, 0, 0))
         equation_rect = equation_text.get_rect(center=(screen_width // 2.5, screen_height // 3.6))
         screen_surface.blit(equation_text, equation_rect)
 
-        input_text = font.render(user_input, True, TEXT_COLOR)
+        input_text = font.render(user_input, True, (0, 0, 0))
         input_rect = input_text.get_rect(center=(screen_width // 1.5, screen_height // 3.6))
         screen_surface.blit(input_text, input_rect)
 

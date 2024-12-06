@@ -1,0 +1,18 @@
+{
+  "pageName": "Computermathematik 12/1",
+  "pageDescription": "",
+  "header": {
+    "navItems": [
+        { "to": "/", "label": "Home" }
+      ]
+
+  },
+  "footer": {
+    "links": [
+      { "href": "https://github.com/noemtdotdev/coma-pygame/", "label": "GitHub", "icon": "fab fa-github"}
+    ],
+    "textAboveLinks": [],
+    "copyright": "Dennis",
+    "copyrightUrl": "/"
+  }
+}

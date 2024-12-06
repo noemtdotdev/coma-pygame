@@ -1,0 +1,66 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@font-face {
+  font-family: "Product Sans";
+  src: url("../fonts/Product\ Sans\ Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Product Sans Bold";
+  src: url("../fonts/Product\ Sans\ Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+body {
+  font-family: "Product Sans", sans-serif;
+  line-height: 1.6;
+  @apply text-white bg-custom-dark-gray
+}
+
+nav ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  @apply text-gray-400;
+}
+
+a.active {
+  @apply text-white;
+}
+
+a:hover {
+  @apply text-white;
+  text-decoration: underline;
+  transition: all 0.1s;
+}
+
+.powerpoint {
+  background-color: #B7472A;
+}
+
+.powerpoint:hover {
+  background-color: #A92B1A;
+}
+
+.zip {
+  background-color: #FFD34E;
+}
+
+.zip:hover {
+  background-color: #FFB100;
+}
+
+.github {
+  background-color: #0D1117;
+}
+
+.github:hover {
+  background-color: #010409;
+}

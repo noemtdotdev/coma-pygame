@@ -20,8 +20,8 @@ def level_9(main_screen):
     BUTTON_HOVER_COLOR = (150, 150, 255)
     BACKGROUND_COLOR = (30, 30, 30)
     TEXT_COLOR = (255, 255, 255)
-    CARD_BACK_COLOR = (200, 200, 200)
-    CARD_FRONT_COLOR = (100, 100, 100)
+    CARD_BACK_COLOR = (6, 65, 26)
+    CARD_FRONT_COLOR = (6, 96, 26)
 
     card_size = 120
     card_margin = 10

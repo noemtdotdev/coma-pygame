@@ -62,9 +62,9 @@ def level_5(main_screen):
         if remaining_time <= 0:
             running = False
 
-        y_offset = screen_height // 1.39
-        x_offset = screen_width // 4.5
-        boundary_x = screen_width - screen_width // 5
+        y_offset = screen_height // 2.55
+        x_offset = screen_width - 900
+        boundary_x = screen_width - x_offset - 70
 
         for i, word in enumerate(word_sequence[current_word_index:current_word_index + 10]):
             color = TEXT_COLOR
@@ -88,7 +88,7 @@ def level_5(main_screen):
                 x_offset += word_surface.get_width() + 20
 
         timer_surface = FONT.render(f"Verbleibende Zeit: {remaining_time}s", True, TEXT_COLOR)
-        main_screen.blit(timer_surface, (screen_width - 900, screen_height // 2.55))
+        main_screen.blit(timer_surface, (screen_width // 4.5, screen_height // 1.39))
 
         score_surface = x_font.render(f"{score}/30", True, TEXT_COLOR)
         main_screen.blit(score_surface, (screen_width // 1.293, screen_height // 1.227))

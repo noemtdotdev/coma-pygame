@@ -1,10 +1,11 @@
 import pygame
 import random
+from classes.image import Image
 
 def level_9(main_screen):
     pygame.init()
     clock = pygame.time.Clock()
-    screen_width, screen_height = 865, 800
+    screen_width, screen_height = 1792 // 1.5, 1121 // 1.5
     main_screen = pygame.display.set_mode((screen_width, screen_height))
     screen_surface = pygame.Surface((screen_width, screen_height))
     pygame.display.set_caption("Level 9 - Memory")
@@ -23,7 +24,7 @@ def level_9(main_screen):
     CARD_BACK_COLOR = (6, 65, 26)
     CARD_FRONT_COLOR = (6, 96, 26)
 
-    card_size = 120
+    card_size = 100
     card_margin = 10
     rows, cols = 6, 6
     words = [
@@ -49,11 +50,14 @@ def level_9(main_screen):
     card_values = words * 2
     random.shuffle(card_values)
 
+    x_offset = (screen_width - (cols * card_size + (cols - 1) * card_margin)) // 2
+    y_offset = (screen_height - (rows * card_size + (rows - 1) * card_margin)) // 2
+    
     cards = []
     for row in range(rows):
         for col in range(cols):
-            x = col * (card_size + card_margin) + card_margin
-            y = row * (card_size + card_margin) + card_margin
+            x = col * (card_size + card_margin) + card_margin + x_offset
+            y = row * (card_size + card_margin) + card_margin + y_offset
             card_rect = pygame.Rect(x, y, card_size, card_size)
             card_value = card_values.pop()
             cards.append({"rect": card_rect, "value": card_value, "flipped": False, "matched": False})
@@ -64,9 +68,13 @@ def level_9(main_screen):
     phase_start_time = 0
     flip_delay = 1000
 
+    overlay_image = Image("assets/overlay_level_9.png", (screen_width, screen_height)).image
+
     running = True
     while running:
         screen_surface.fill(BACKGROUND_COLOR)
+        screen_surface.blit(overlay_image, (0, 0))
+
         mouse_pos = pygame.mouse.get_pos()
 
         exit_button = pygame.Rect(screen_width - 60, 20, 40, 40)

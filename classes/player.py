@@ -1,9 +1,11 @@
 import pygame
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, width):
+    def __init__(self, width, height=144, pos=(100, 0), lower_bound = 500):
         super().__init__()
         self.WIDTH = width
+        self.HEIGHT = height
+        self.ratio = self.HEIGHT / 144
         
         self.sprite_sheet = pygame.image.load("assets/player.png").convert_alpha()
         
@@ -25,18 +27,18 @@ class Player(pygame.sprite.Sprite):
         self.image = self.idle_frames[self.current_frame]
         self.rect = self.image.get_rect()
         
-        self.pos = pygame.math.Vector2(100, 0)
+        self.pos = pygame.math.Vector2(*pos)
         self.vel = pygame.math.Vector2(0, 0)
         self.acc = pygame.math.Vector2(0, 0)
         
         self.on_ground = False
         self.gravity = 1
         self.jump_strength = -15
-        self.speed = 0.5
+        self.speed = 1
         self.friction = -0.2
         self.jump_phase = None
         self.direction = "right"
-
+        self.lower_bound = lower_bound
 
     def load_frames(self, row, num_frames, start_col=0):
         frames = []
@@ -44,7 +46,7 @@ class Player(pygame.sprite.Sprite):
             x = (start_col + i) * self.frame_width
             y = row * self.frame_height
             frame = self.sprite_sheet.subsurface((x, y, self.frame_width, self.frame_height))
-            frame = pygame.transform.scale(frame, (self.frame_width * 2, self.frame_height * 2))
+            frame = pygame.transform.scale(frame, (int(self.frame_width * self.ratio), self.HEIGHT))
             frames.append(frame)
         return frames
 
@@ -86,8 +88,8 @@ class Player(pygame.sprite.Sprite):
         
         self.rect.midbottom = self.pos
 
-        if self.pos.y >= 500:
-            self.pos.y = 500
+        if self.pos.y >= self.lower_bound:
+            self.pos.y = self.lower_bound
             self.vel.y = 0
             self.on_ground = True
             self.jump_phase = None
@@ -103,7 +105,6 @@ class Player(pygame.sprite.Sprite):
             self.rect.right = self.WIDTH + 80
             self.pos.x = self.rect.midbottom[0]
             self.vel.x = 0
-
 
     def update_jump_phase(self):
         if self.vel.y < -10:
@@ -144,7 +145,7 @@ class Player(pygame.sprite.Sprite):
 if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((1300, 600))
-    player = Player(1300)
+    player = Player(1300, height=72)  # Example with a different height
     player_group = pygame.sprite.Group(player)
 
     running = True

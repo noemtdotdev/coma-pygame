@@ -40,6 +40,7 @@ def level_1(main_screen):
     
     cell_dimensions = (screen_height // 20 + screen_width // 35) // 2
 
+    # coming up: 2 stunden of wall placement
     walls = [
         wall(screen_height, False, (-2, -2)),
         wall(screen_width, True, (-2, -2)),
@@ -403,6 +404,8 @@ def level_1(main_screen):
         wall(cell_dimensions, True, (cell_dimensions*27, cell_dimensions*20)),
         wall(cell_dimensions*2, True, (cell_dimensions*29, cell_dimensions*20)),
     ]
+
+    # danke dass die scheiße vorbei ist
 
     overlay_image = Image("assets/overlay_level_1.png", (screen_width, screen_height)).image
 

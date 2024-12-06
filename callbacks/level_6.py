@@ -2,6 +2,8 @@ import pygame
 from pygame_texteditor import TextEditor
 import json
 
+from classes.cursor import Cursor
+
 class ConsoleWindow:
     def __init__(self, x, y, width, height, font, font_size, text_color, bg_color):
         self.rect = pygame.Rect(x, y, width, height)
@@ -95,6 +97,8 @@ def level_6(main_screen):
     ok_button = pygame.Rect(screen_width - 60, 20, 40, 40)
     run_button = pygame.Rect(screen_width - 300, screen_height - 230, 120, 40)
 
+    cursor = Cursor()
+
     running = True
     while running:
         screen_surface.fill(BACKGROUND_COLOR)
@@ -159,6 +163,11 @@ def level_6(main_screen):
         console.draw(screen_surface)
         main_screen.blit(screen_surface, (0, 0))
 
+        if ok_button.collidepoint(mouse_pos) or run_button.collidepoint(mouse_pos):
+            cursor.set_hand_cursor()
+        else:
+            cursor.default()
+        
         pygame.display.flip()
         clock.tick(60)
 
